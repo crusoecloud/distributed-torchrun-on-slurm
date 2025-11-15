@@ -20,9 +20,7 @@ echo "GPUs per node: $SLURM_GPUS_PER_NODE"
 echo "Total GPUs: $(($SLURM_JOB_NUM_NODES * 8))"
 
 # Activate your Python environment
-# source /path/to/your/venv/bin/activate
-# or
-# conda activate your-env-name
+source .venv/bin/activate
 
 # Set environment variables for better performance
 export NCCL_DEBUG=INFO
