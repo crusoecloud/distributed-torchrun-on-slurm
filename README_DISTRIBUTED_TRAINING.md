@@ -13,6 +13,7 @@ This example demonstrates how to run distributed PyTorch training across multipl
 
 - `train_distributed.py` - Main training script with DDP implementation
 - `run_distributed.slurm` - SLURM batch script for multi-node job submission
+- `requirements.txt` - the usual python packages
 
 ## Requirements
 
@@ -22,18 +23,8 @@ you can create and activate the virtual env from the login node and install the 
 activate the venv)
 
 ```bash
-pip install torch torchvision
-```
-
-Or use the requirements file:
-
-```bash
-# Create requirements.txt
-cat > requirements.txt << EOF
-torch>=2.0.0
-torchvision>=0.15.0
-EOF
-
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -46,9 +37,8 @@ Edit `run_distributed.slurm` to match your cluster setup:
 
 1. **Environment activation** (lines 24-27):
    ```bash
-   source /path/to/your/venv/bin/activate
-   # or
-   conda activate your-env-name
+   source .venv/bin/activate
+
    ```
 
 2. **SLURM parameters** (lines 2-10):
