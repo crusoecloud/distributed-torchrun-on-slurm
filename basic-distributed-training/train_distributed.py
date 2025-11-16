@@ -75,7 +75,7 @@ def get_dataloader(rank, world_size, batch_size, data_dir='./data'):
     train_dataset = datasets.MNIST(
         data_dir,
         train=True,
-        download=(rank == 0),  # Only download on rank 0
+        download=True,
         transform=transform
     )
 
