@@ -4,7 +4,7 @@ This example demonstrates how to run distributed PyTorch training across multipl
 
 ## Overview
 
-- **Setup**: 2 nodes, 8 GPUs per node = 16 total GPUs
+- **Setup**: 4 nodes, 8 GPUs per node = 16 total GPUs
 - **Launcher**: `torchrun` (PyTorch's recommended distributed launcher)
 - **Backend**: NCCL for GPU communication
 - **Dataset**: MNIST (for demonstration)
@@ -13,24 +13,18 @@ This example demonstrates how to run distributed PyTorch training across multipl
 
 - `train_distributed.py` - Main training script with DDP implementation
 - `run_distributed.slurm` - SLURM batch script for multi-node job submission
+- `requirements.txt` - the usual python packages
 
 ## Requirements
 
-Install the required packages:
+Install the required packages in a virtual environment accessible to all hosts
+(if using the Slurm solution from Crusoe github, or anything where all the slurm nodes share a common /home dir mounted from NFS,
+you can create and activate the virtual env from the login node and install the requirements on that; then the sbatch file should also contain a step to
+activate the venv)
 
 ```bash
-pip install torch torchvision
-```
-
-Or use the requirements file:
-
-```bash
-# Create requirements.txt
-cat > requirements.txt << EOF
-torch>=2.0.0
-torchvision>=0.15.0
-EOF
-
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -40,27 +34,20 @@ pip install -r requirements.txt
 
 Edit `run_distributed.slurm` to match your cluster setup:
 
-1. **Module loading** (lines 19-22):
+
+1. **Environment activation** (lines 24-27):
    ```bash
-   module load python/3.9
-   module load cuda/11.8
-   module load nccl/2.15
+   source .venv/bin/activate
+
    ```
 
-2. **Environment activation** (lines 24-27):
-   ```bash
-   source /path/to/your/venv/bin/activate
-   # or
-   conda activate your-env-name
-   ```
-
-3. **SLURM parameters** (lines 2-10):
-   - `--nodes=2` - Number of nodes (adjust as needed)
+2. **SLURM parameters** (lines 2-10):
+   - `--nodes=4` - Number of nodes (adjust as needed)
    - `--gpus-per-node=8` - GPUs per node (adjust as needed)
    - `--cpus-per-task=32` - CPU cores (adjust based on your system)
    - `--time=02:00:00` - Time limit
 
-4. **Network interface** (line 31):
+3. **Network interface** (line 31):
    ```bash
    export NCCL_SOCKET_IFNAME=^docker,lo  # Adjust for your network setup
    ```
