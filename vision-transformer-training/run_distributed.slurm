@@ -23,6 +23,10 @@ echo "Total GPUs: $(($SLURM_JOB_NUM_NODES * 8))"
 # Activate your Python environment
 source ~/.venv/bin/activate
 
+# On ARM systems e.g GB200 use the system NCCL as installed by deb
+# not the one that comes with PyTorch
+#export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libnccl.so.2
+
 # Set environment variables for better performance
 export NCCL_DEBUG=INFO
 export NCCL_IB_DISABLE=0              # Enable InfiniBand if available
