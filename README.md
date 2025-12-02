@@ -4,16 +4,12 @@ This example demonstrates how to run distributed PyTorch training across multipl
 
 ## Overview
 
-- **Setup**: 4 nodes, 8 GPUs per node = 16 total GPUs
+- **Setup**: 4 nodes, 8 GPUs per node = 16 total GPUs - edit to match the capacity of your cluster
 - **Launcher**: `torchrun` (PyTorch's recommended distributed launcher)
 - **Backend**: NCCL for GPU communication
 - **Dataset**: MNIST (for demonstration)
 
-## Files
 
-- `train_distributed.py` - Main training script with DDP implementation
-- `run_distributed.slurm` - SLURM batch script for multi-node job submission
-- `requirements.txt` - the usual python packages
 
 ## Requirements
 
@@ -25,6 +21,7 @@ activate the venv)
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 #or whichever version of cuda is suitable for the nvidia driver on your ci
 pip install -r requirements.txt
 ```
 
@@ -32,12 +29,13 @@ pip install -r requirements.txt
 
 ### SLURM Script Configuration
 
+cd into the directory for your chosen example e.g basic distributed training or the vision model
 Edit `run_distributed.slurm` to match your cluster setup:
 
 
 1. **Environment activation** (lines 24-27):
    ```bash
-   source .venv/bin/activate
+   source ~/distributed-torchrun-on-slurm/venv/bin/activate
 
    ```
 
