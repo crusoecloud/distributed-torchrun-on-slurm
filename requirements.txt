@@ -1,5 +1,3 @@
-torch
-torchvision
 transformers
 datasets
 accelerate
@@ -7,5 +5,3 @@ tokenizers
 numpy
 tqdm
 nvidia-ml-py3
-torchvision
-torchaudio
