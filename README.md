@@ -1,27 +1,22 @@
 # PyTorch Distributed Training on SLURM
 
-This example demonstrates how to run distributed PyTorch training across multiple SLURM nodes, each with multiple GPUs, using `torchrun`.
-
-## Overview
-
-- **Setup**: 4 nodes, 8 GPUs per node = 16 total GPUs - edit to match the capacity of your cluster
-- **Launcher**: `torchrun` (PyTorch's recommended distributed launcher)
-- **Backend**: NCCL for GPU communication
-- **Dataset**: MNIST (for demonstration)
+This repo contains some examples of distributed PyTorch training in multi-GPU, multi-node SLURM clusters.
+The examples are typically used to test [SLURM clusters](https://github.com/crusoecloud/slurm) created on Crusoe Cloud.
 
 
-
-## Requirements
-
-Install the required packages in a virtual environment accessible to all hosts
-(if using the Slurm solution from Crusoe github, or anything where all the slurm nodes share a common /home dir mounted from NFS,
-you can create and activate the virtual env from the login node and install the requirements on that; then the sbatch file should also contain a step to
-activate the venv)
+## Pre-requisites
+Clone this repo and cd into the distributed-torchrun-on-slurm directory.
+Install the required packages in a virtual environment accessible to all hosts. In the Crusoe SLURM solution, /home of all cluster hosts is mounted to a shared volume, so by creating the venv on the login node it's available on every node.
 
 ```bash
+#install the right python venv for your python version
+sudo apt install -y python3.10-venv
+#create and activate the venv
 python3 -m venv .venv
 source .venv/bin/activate
+#install torch packages direct from PyTorch
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 #or whichever version of cuda is suitable for the nvidia driver on your ci
+#install other packages
 pip install -r requirements.txt
 ```
 
@@ -29,8 +24,10 @@ pip install -r requirements.txt
 
 ### SLURM Script Configuration
 
-cd into the directory for your chosen example e.g basic distributed training or the vision model
-Edit `run_distributed.slurm` to match your cluster setup:
+cd into the directory for your chosen example e.g basic distributed training or the vision-transformer-training
+Each directory contains Python training programs (train_\*.py) and a corresponding sbatch (run_\*.slurm) script for each.
+Edit the sbatch script for the program you want to run to set the number of nodes, .venv location and any other options necessary for your environment.
+Then submit the job and monitor it with squeue, log tailing etc. The basic measure of success is that each job should iterate through epochs and generate checkpoints.
 
 
 1. **Environment activation** (lines 24-27):
