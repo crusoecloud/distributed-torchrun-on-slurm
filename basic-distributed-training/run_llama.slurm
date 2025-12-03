@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:8
 #SBATCH --gpus-per-node=8            # Number of GPUs per node
 #SBATCH --cpus-per-task=32           # CPU cores per task (adjust based on your system)
-#SBATCH --time=02:00:00              # Time limit hrs:min:sec
+#SBATCH --time=04:15:00              # Time limit hrs:min:sec
 #SBATCH --output=logs/slurm-%j.out   # Standard output log
 #SBATCH --error=logs/slurm-%j.err    # Standard error log
 #SBATCH --exclusive                  # Exclusive node access
