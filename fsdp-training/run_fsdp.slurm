@@ -21,7 +21,7 @@ echo "GPUs per node: $SLURM_GPUS_PER_NODE"
 echo "Total GPUs: $(($SLURM_JOB_NUM_NODES * 8))"
 
 # Activate your Python environment
-source ~/.venv/bin/activate
+source ~/distributed-torchrun-on-slurm/.venv/bin/activate
 
 # On ARM systems e.g GB200 use the system NCCL as installed by deb
 # not the one that comes with PyTorch
