@@ -6,9 +6,11 @@ The examples are typically used to test [SLURM clusters](https://github.com/crus
 
 ## Pre-requisites
 Clone this repo and cd into the distributed-torchrun-on-slurm directory.
-Install the required packages in a virtual environment accessible to all hosts. In the Crusoe SLURM solution, /home of all cluster hosts is mounted to a shared volume, so by creating the venv on the login node it's available on every node.
+Install the required packages in a virtual environment accessible to all hosts. In the Crusoe SLURM solution, /home of all cluster hosts is mounted to a shared volume, so by creating the venv on the login node it's available on every node. The .slurm script in each example refers to the venv location (in the venv activation step) so if you create the venv somewhere other than ~/distributed-torchrun-on-slurm, make sure to update the path in the .slurm scripts.
 
 ```bash
+git clone https://github.com/crusoecloud/distributed-torchrun-on-slurm
+cd distributed-torchrun-on-slurm
 #install the right python venv for your python version
 sudo apt install -y python3.10-venv
 #create and activate the venv
