@@ -1,22 +1,40 @@
-Running TorchTitan on Crusoe Cloud's SLURM Solution
+# Running TorchTitan on Crusoe Cloud's SLURM Solution #
 
 From the TorchTitan repo (https://github.com/pytorch/torchtitan):
 
 *Torchtitan is a PyTorch native platform designed for rapid experimentation and large-scale training of generative AI models. As a minimal clean-room implementation of PyTorch native scaling techniques, torchtitan provides a flexible foundation for developers to build upon. With torchtitan extension points, one can easily create custom extensions tailored to specific needs.*
 
-We will do multinode fine tuning of Llama3_8b using the C4 dataset. These instructions are specific to GB200, but the general principle is the same for any Crusoe Slurm cluster. The results section at the bottom of the page will be extended to cover multiple GPUs and cluster and batch sizes.
+We will do multinode fine tuning of Llama3_8b using the C4 dataset. These instructions are specific to GB200, but the general principle is the same for any Crusoe Slurm cluster. The results section at the bottom of the page will be extended to cover multiple GPUs and cluster and batch sizes.  
 
-Edit torchtitan/models/llama3/train_configs/llama3_8b.toml to enable checkpointing (if required - to me, seeing checkpoints created is a tangible measure of success!)
-Download the tokenizer from huggingface as shown in the TorchTitan instructions
+Clone the torchtitan repo to the home dir of the cluster under test.  
+
 On any one of the compute nodes (not the login or head node!) create a Python virtual environment, activate it, and install the requirements:
-
 
 sudo apt-get install python3.12-venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu130 --force-reinstall
+pip install --pre torchtitan --index-url https://download.pytorch.org/whl/nightly/cu130
+#Download tokenizer from HuggingFace
+python scripts/download_hf_assets.py --repo_id meta-llama/Llama-3.1-8B --assets tokenizer --hf_token=hf_xxxxxxxxxxxx
 Update multinode_trainer.slurm for the correct number of nodes and gpus per node (in both the ‘sbatch’ parts and in the torchrun command near the bottom) and add a line to activate the venv.
-                                                                                                                                                             
+
+** For quicker performance on repeated training runs: download C4 data set to cluster's /data volume **
+```
+cd /data
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+GIT_LFS_SKIP_SMUDGE=1
+git clone https://huggingface.co/datasets/allenai/c4
+cd c4
+#this next step takes about an hour
+git lfs pull --include "en/*"
+```
+...and update the .toml training config file with * dataset_path = "/data/c4/" * in the \[training\] section
+                                                                                                                                         
+### Running the job ###
+
 Run the job from the slurm login node: sbatch multinode_trainer.sbatch. ‘Watch squeue’ to see that the job is running - if it doesn’t go to ‘R’ status it could be that you didn’t have sufficient nodes in ‘idle’ state, or that you request resources that no node has (e.g too many GPU or CPU per node)
 When the job is running, its logs will be written to slurm-x.out where x is the ID of the slurm job. The outputs below show the performance to be expected on a cluster where all the nodes are in the same imex partition.
 
