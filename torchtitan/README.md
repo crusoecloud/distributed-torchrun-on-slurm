@@ -48,6 +48,10 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 |GB200   |17 (68 GPU)                  |5         |step: 100  loss:  6.4277  grad_norm:  2.9062  memory: 158.61GiB(86.20%)  tps: 17,581  tflops: 1,018.20  mfu: 45.25%|
 |GB200   |9 (36 GPU)                   |5         |step: 100  loss:  8.2954  grad_norm: 29.3788  memory: 159.31GiB(86.58%)  tps: 17,975  tflops: 1,040.99  mfu: 46.27%|
 |GB200   |3 (12 GPU)                   |5         |step: 100  loss:  6.5572  grad_norm:  3.6680  memory: 161.65GiB(87.85%)  tps: 18,284  tflops: 1,058.93  mfu: 47.06%|
-|B200    |2 (16 GPU)                   |5         |step: 10  loss:  9.9256  grad_norm:  9.2181  memory: 161.51GiB(90.56%)  tps: 17,441  tflops: 1,010.08  mfu: 44.89%|
+|B200    |2 (16 GPU)                   |5         |step: 100  loss:  6.1751  grad_norm:  1.4532  memory: 161.51GiB(90.56%)  tps: 17,500  tflops: 1,013.53  mfu: 45.05%|
+|B200    |1 (8 GPU)                    |5         |step: 100  loss:  6.3314  grad_norm:  4.0237  memory: 165.16GiB(92.60%)  tps: 17,469  tflops: 1,011.68  mfu: 44.96% |
 
 
+### When stress testing nodes and looking for issues, we are looking for consistent results across all GPUS plus high memory utilization and MFU ###
+
+<img width="1164" height="179" alt="image" src="https://github.com/user-attachments/assets/73c405ca-2fb5-491b-b443-b3649182a248" />
