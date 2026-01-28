@@ -9,7 +9,7 @@ We will do multinode fine tuning of Llama3_8b using the C4 dataset. These instru
 Clone the torchtitan repo to the home dir of the cluster under test.  
 
 On any one of the compute nodes (not the login or head node!) create a Python virtual environment, activate it, and install the requirements:
-
+```
 sudo apt-get install python3.12-venv
 python3 -m venv .venv
 source .venv/bin/activate
@@ -18,6 +18,7 @@ pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu1
 pip install --pre torchtitan --index-url https://download.pytorch.org/whl/nightly/cu130
 #Download tokenizer from HuggingFace
 python scripts/download_hf_assets.py --repo_id meta-llama/Llama-3.1-8B --assets tokenizer --hf_token=hf_xxxxxxxxxxxx
+```
 Update multinode_trainer.slurm for the correct number of nodes and gpus per node (in both the ‘sbatch’ parts and in the torchrun command near the bottom) and add a line to activate the venv.
 
 ** For quicker performance on repeated training runs: download C4 data set to cluster's /data volume **
