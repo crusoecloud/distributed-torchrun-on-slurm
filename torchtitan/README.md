@@ -63,7 +63,7 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 
 |GPU Type|Compute nodes in training job|Batch size|Performance indicators at step 1000 of Torchtitan test described on this page|
 |--------|-----------------------------|----------|-----------------------------------------------------------------------------|
-|GB200   |18                           |150       |step: 1000  loss:  3.8267  grad_norm:  0.2035  memory: 37.12GiB(20.17%)  tps: 5,354  tflops: 310.10  mfu: 13.78%|
-|GB200   |9                            |150       |step: 1000  loss:  3.8267  grad_norm:  0.2035  memory: 36.58GiB(19.88%)  tps: 6,124  tflops: 354.66  mfu: 15.76%|
-|GB200   |3                            |150       |step: 1000  loss:  |
+|GB200   |17                           |5         |step: 100  loss:  6.4277  grad_norm:  2.9062  memory: 158.61GiB(86.20%)  tps: 17,581  tflops: 1,018.20  mfu: 45.25%|
+|GB200   |9                            |5         |step: 100  loss:  8.2954  grad_norm: 29.3788  memory: 159.31GiB(86.58%)  tps: 17,975  tflops: 1,040.99  mfu: 46.27%|
+|GB200   |3                            |5         |step: 100  loss:  6.5572  grad_norm:  3.6680  memory: 161.65GiB(87.85%)  tps: 18,284  tflops: 1,058.93  mfu: 47.06%|
 
