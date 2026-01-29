@@ -61,4 +61,4 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 Cluster setups: 2 x B200.8x node vs 4 x GB200.4x nodes; C4 training dataset stored on the same shared volume.  
 Wall clock time for 1000 steps:  
 B200: 40 mins 58 sec  
-GB200: 48 minutes 42 secv  
+GB200: 48 minutes 42 sec  
