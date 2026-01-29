@@ -55,3 +55,10 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 ### When stress testing nodes and looking for issues, we are looking for consistent results across all GPUS plus high memory utilization and MFU ###
 
 <img width="1164" height="179" alt="image" src="https://github.com/user-attachments/assets/73c405ca-2fb5-491b-b443-b3649182a248" />
+
+# Small-scale GB200 vs B200 performance comparison for fine-tuning Llama3.1-70B with TorchTitan #
+
+Cluster setups: 2 x B200.8x node vs 4 x GB200.4x nodes; C4 training dataset stored on the same shared volume.
+Wall clock time for 1000 steps:
+B200: 40 mins 58 sec
+GB200: 48 minutes 42 sec
