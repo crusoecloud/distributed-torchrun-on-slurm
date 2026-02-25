@@ -15,6 +15,8 @@ cd torchtitan
 sudo apt-get install python3.12-venv
 python3 -m venv .venv
 source .venv/bin/activate
+# add the tomli package to requirements.txt
+echo tomli >> requirements.txt
 pip install -r requirements.txt
 pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu130 --force-reinstall
 pip install --pre torchtitan --index-url https://download.pytorch.org/whl/nightly/cu130
