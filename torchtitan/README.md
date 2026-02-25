@@ -11,6 +11,9 @@ Clone the torchtitan repo to the home dir of the cluster under test.
 On any one of the compute nodes (not the login or head node!) create a Python virtual environment, activate it, and install the requirements:
 ```
 git clone https://github.com/pytorch/torchtitan
+#switch to v0.2.2 because of breaking changes in main branch
+#I'll update these instructions to work with 'main' shortly
+git checkout v0.2.2
 cd torchtitan
 sudo apt-get install python3.12-venv
 python3 -m venv .venv
