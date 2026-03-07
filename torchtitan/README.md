@@ -52,7 +52,7 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 
 # TorchTitan performance results for various cluster configs #
 
-|GPU Type|Compute nodes in training job|Batch size|Performance indicators at step 1000 of Torchtitan test described on this page|
+|GPU Type|Compute nodes in training job|Batch size|Performance indicators at step 100 of Torchtitan test described on this page|
 |--------|-----------------------------|----------|-----------------------------------------------------------------------------|
 |GB200   |17 (68 GPU)                  |5         |step: 100  loss:  6.4277  grad_norm:  2.9062  memory: 158.61GiB(86.20%)  tps: 17,581  tflops: 1,018.20  mfu: 45.25%|
 |GB200   |9 (36 GPU)                   |5         |step: 100  loss:  8.2954  grad_norm: 29.3788  memory: 159.31GiB(86.58%)  tps: 17,975  tflops: 1,040.99  mfu: 46.27%|
@@ -60,6 +60,7 @@ When the job is running, its logs will be written to slurm-x.out where x is the 
 |B200    |2 (16 GPU)                   |5         |step: 100  loss:  6.1751  grad_norm:  1.4532  memory: 161.51GiB(90.56%)  tps: 17,500  tflops: 1,013.53  mfu: 45.05%|
 |B200    |1 (8 GPU)                    |5         |step: 100  loss:  6.3314  grad_norm:  4.0237  memory: 165.16GiB(92.60%)  tps: 17,469  tflops: 1,011.68  mfu: 44.96% |
 |H200    |16 (128 GPU)                 |4         |step: 100  loss:  7.2984  grad_norm:  5.6297  memory: 128.17GiB(91.66%)  tps: 9,044  tflops: 523.76  mfu: 52.96% |
+|H100    |16 (128 GPU)                 |2         |step: 100  loss:  6.3626  grad_norm:  5.2285  memory: 66.38GiB(83.83%)  tps: 7,169  tflops: 415.21  mfu: 41.98% |
 
 
 ### When stress testing nodes and looking for issues, we are looking for consistent results across all GPUS plus high memory utilization and MFU ###
