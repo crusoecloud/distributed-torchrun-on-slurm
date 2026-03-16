@@ -19,8 +19,8 @@ export NCCL_SOCKET_IFNAME=eth0
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 export MODEL_PATH="./models/qwen25vl-7b"
-export OUTPUT_DIR="./outputs/qwen25vl-sft-${JOBID}"
 export DATA_PATH="./data/llava_webdataset/pretrain*.tar"
+export OUTPUT_DIR="./outputs/qwen25vl-sft-${JOBID}"
 
 # ── Training hyperparams ──────────────────────────────────────────────────────
 # Effective batch = MICRO_BATCH * GRAD_ACCUM * NUM_GPUS
