@@ -15,9 +15,9 @@ import webdataset as wds
 from PIL import Image
 import io
 # --- CONFIGURATION (Update these with your shared drive paths) ---
-MODEL_PATH = "/home/abe/models/qwen25vl-7b/"
-DATA_PATH = "/home/abe/data/llava_webdataset/pretrain*.tar" 
-OUTPUT_DIR="/home/abe/outputs/qwen25vl-sft-${JOBID}"
+MODEL_PATH=os.getenv('MODEL_PATH','./models/qwen25vl-7b')
+DATA_PATH=os.getenv('DATA_PATH','./data/llava_webdataset/pretrain*.tar')
+OUTPUT_DIR=os.getenv('OUTPUT_DIR')
 # -----------------------------------------------------------------
 
 def parse_webdataset(sample):
