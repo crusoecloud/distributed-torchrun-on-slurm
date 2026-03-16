@@ -1,5 +1,5 @@
 **Quick Start**  
-Clone the repo and cd into this dir
+Clone the repo and cd into this dir  
 Make venv_setup.sh executable and run it, then download the model weights and the dataset:
 ```
 chmod a+x venv_setup.sh && ./venv_setup.sh
