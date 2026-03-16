@@ -1,4 +1,4 @@
-Quick Start
+**Quick Start**  
 Clone the repo and cd into this dir
 Make venv_setup.sh executable and run it, then download the model weights and the dataset:
 ```
@@ -14,7 +14,7 @@ sbatch train_qwen.sbatch
 Tail the .err and .out files from the logs directory to monitor the progress of your job. You can use the Metrics tab of your GPU nodepool instances to monitor GPU metrics charts while the job is in progress.
 
 ---
-Description
+**Description**  
 The script fine-tunes Qwen2.5-VL-7B, a vision-language model, on a dataset of image-caption pairs stored as WebDataset tar archives.
 
   Data pipeline: At startup, each rank reads the RANK/WORLD_SIZE environment variables set by torchrun and takes every Nth shard from the sorted shard list (shard_files[rank::world_size]), so the full dataset is covered once across all GPUs with no overlap. Within each rank, shards are further divided
