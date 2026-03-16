@@ -1,20 +1,25 @@
-**Quick Start**  
-Clone the repo and cd into this dir  
+##Quick Start##  
+
+This example is tested for use on a Crusoe Managed Slurm cluster with a minimum of 1 x H100.8x GPU node, and relies on pre-existing Slurm and UV installations included in the Crusoe Managed Slurm product, although it can be made to work on any other comparable Slurm cluster. [Install Crusoe Managed Slurm](https://docs.crusoecloud.com/orchestration/slurm/overview) if you haven't already done so.  
+
+[Create users on your Crusoe Managed Slurm cluster](https://docs.crusoecloud.com/orchestration/slurm/user-management) and then SSH into the Login node as your Slurm user. Git clone this repo and cd into this directory.  
+
 Make venv_setup.sh executable and run it, then download the model weights and the dataset:
 ```
 chmod a+x venv_setup.sh && ./venv_setup.sh
+export HF_TOKEN=<your huggingface token>
 python download_dataset.py
 python download_model.py
 ```
-Edit the sbatch file (train_qwen.sbatch) to have the correct number of worker nodes for your cluster.
+Edit the sbatch file (train_qwen.sh) to have the correct number of worker nodes for your cluster.
 Run the sbatch file:
 ```
-sbatch train_qwen.sbatch
+sbatch train_qwen.sh
 ```
-Tail the .err and .out files from the logs directory to monitor the progress of your job. You can use the Metrics tab of your GPU nodepool instances to monitor GPU metrics charts while the job is in progress.
+Tail the .err and .out files from the logs directory to monitor the progress of your job. You can use the Metrics tab of your GPU nodepool instances to monitor GPU metrics charts while the job is in progress. On a single node, the job as configured here (5000 steps) will take about 4.5 hours to complete and will create a checkpoint every 500 steps.
 
 ---
-**Description**  
+##Description##  
 The script fine-tunes Qwen2.5-VL-7B, a vision-language model, on a dataset of image-caption pairs stored as WebDataset tar archives.
 
   Data pipeline: At startup, each rank reads the RANK/WORLD_SIZE environment variables set by torchrun and takes every Nth shard from the sorted shard list (shard_files[rank::world_size]), so the full dataset is covered once across all GPUs with no overlap. Within each rank, shards are further divided
