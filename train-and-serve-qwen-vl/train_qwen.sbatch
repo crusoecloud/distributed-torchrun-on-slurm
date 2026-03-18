@@ -12,9 +12,9 @@ JOBID=$SLURM_JOB_ID
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
 MASTER_PORT=29500
 
-# ── NCCL (TCP-only, no InfiniBand on Crusoe) ──────────────────────────────────
-export NCCL_IB_DISABLE=1
+export NCCL_IB_DISABLE=0
 export NCCL_P2P_DISABLE=0
+#socket is correct for Crusoe Managed Slurm (i.e slurm on K8S) but adjust for other environment types
 export NCCL_SOCKET_IFNAME=eth0
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
@@ -38,10 +38,8 @@ export TORCH_NCCL_DUMP_ON_TIMEOUT=1
 # More verbose NCCL output
 export NCCL_DEBUG=WARN
 export NCCL_DEBUG_SUBSYS=ALL
-
 # Catch distributed hangs with a stack trace
 export TORCH_DISTRIBUTED_DEBUG=DETAIL
-
 export TORCH_NCCL_HEARTBEAT_TIMEOUT_SEC=300
 
 echo "======================================"

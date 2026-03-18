@@ -153,7 +153,7 @@ def main():
         logging_steps=10,
         save_steps=500,
         gradient_checkpointing=True,
-        deepspeed="ds_config.json", # Point to DeepSpeed config
+        deepspeed="deepspeed_config.json", # Point to DeepSpeed config
         report_to="none", # Change to "wandb" if you use Weights & Biases
         remove_unused_columns=False, # Crucial for custom multimodal data
         ddp_broadcast_buffers=False,
