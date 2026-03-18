@@ -1,22 +1,33 @@
 ## Quick Start ##  
 
-This example is tested for use on a Crusoe Managed Slurm cluster with a minimum of 1 x H100.8x GPU node, and relies on pre-existing Slurm and UV installations included in the Crusoe Managed Slurm product, although it can be made to work on any other comparable Slurm cluster. [Install Crusoe Managed Slurm](https://docs.crusoecloud.com/orchestration/slurm/overview) if you haven't already done so.  
+This example is tested for use on a Crusoe Managed Slurm cluster with a minimum of 1 x H100.8x GPU node, and relies on pre-existing Slurm and UV installations included in the Crusoe Managed Slurm product. It can be adapted for use with any other comparable Slurm cluster. [Install Crusoe Managed Slurm](https://docs.crusoecloud.com/orchestration/slurm/overview) if you haven't already done so.  
 
 [Create users on your Crusoe Managed Slurm cluster](https://docs.crusoecloud.com/orchestration/slurm/user-management) and then SSH into the Login node as your Slurm user. Git clone this repo and cd into this directory.  
 
-Make venv_setup.sh executable and run it, then download the model weights and the dataset:
+Make venv_setup.sh executable and run it, then download the model weights and the dataset (these steps take several minutes):
 ```
 chmod a+x venv_setup.sh && ./venv_setup.sh
 export HF_TOKEN=<your huggingface token>
 python download_dataset.py
 python download_model.py
 ```
-Edit the sbatch file (train_qwen.sh) to have the correct number of worker nodes for your cluster.
+Edit the sbatch file (train_qwen.sbatch) to have the correct number of worker nodes for your cluster.
 Run the sbatch file:
 ```
-sbatch train_qwen.sh
+sbatch train_qwen.sbatch
 ```
-Tail the .err and .out files from the logs directory to monitor the progress of your job. You can use the Metrics tab of your GPU nodepool instances to monitor GPU metrics charts while the job is in progress. On a single node, the job as configured here (5000 steps) will take about 4.5 hours to complete and will create a checkpoint every 500 steps.
+Tail the .err and .out files from the logs directory to monitor the progress of your job. You can use the Metrics tab of your GPU nodepool instances to monitor GPU metrics charts while the job is in progress. On a single node, the job as configured here (5000 steps) takes about 4.5 hours to complete and creates a checkpoint every 500 steps.  
+
+Merge the resulting LoRA adapter into the base model to create a new version of the model:
+```
+source .venv/bin/activate #if not already done
+OUTPUT_SUBDIR_NAME=<name of the dir under ./outputs with your training output> python merge_adapter.py
+```
+Now compare the base model with the fine-tuned model by serving them with vLLM and asking them to describe images. Provide the path of the model you want to serve and run the serve_model.sbatch script. Starting with the base model:
+```
+MODEL_PATH=./models/qwen25vl-7b serve_model.sbatch
+```
+Tail the corresponding logs file as vLLM starts up on the chosen worker node. When vLLM is ready to serve, you can run the curl examples while logged into the Slurm login node to see the results. Cancel the job and re-run it giving the path to the merged model's directory. You should see that your fine-tuned model describes the same image in different terms to the base model.
 
 ---
 ## Description ##  
